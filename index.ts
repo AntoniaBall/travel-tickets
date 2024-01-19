@@ -1,6 +1,6 @@
     import express, { Request, Response, Application } from "express";
 import dotenv from 'dotenv';
-import appRouter from "./routes";
+import appRouter from "./config/routes";
 import { db } from "./config/db";
 
 dotenv.config();
@@ -12,13 +12,12 @@ app.use(appRouter);
 
 db.getConnection(function(err,conn) {
     if (err) {
-        console.log('err');
-        console.log(err.message);
+        throw new Error(`Cannot connect to the DB , ${err.message}`);
     } else {
-        console.log('conn');
-        console.log(conn);
+        console.log(`DB Connexion status ${conn.state}`);
     }
 });
+
 app.get('/', (req: Request, res: Response) => {
     res.send('Express && TypeScript Server is running');
 });
