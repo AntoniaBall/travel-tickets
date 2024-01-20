@@ -1,5 +1,5 @@
 import express from "express";
-import { getCity } from "../controllers/CityController";
+import { getCity } from "../src/controllers/CityController";
 
 const appRouter = express.Router();
 

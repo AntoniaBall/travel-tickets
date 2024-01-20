@@ -9,12 +9,13 @@ const app: Application = express();
 const port = process.env.PORT || 3001;
 
 app.use(appRouter);
+console.log("🚀 ~ appRouter:", appRouter);
 
 db.getConnection(function(err,conn) {
     if (err) {
         throw new Error(`Cannot connect to the DB , ${err.message}`);
     } else {
-        console.log(`DB Connexion status ${conn.state}`);
+        console.log(`DB Connexion status ${conn}`);
     }
 });
 
