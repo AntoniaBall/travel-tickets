@@ -83,6 +83,12 @@ web_modules/
 .cache
 .parcel-cache
 
+
+# Fixtures
+10objects.json
+dataToImport.json
+fixtures/
+
 # Next.js build output
 .next
 out
