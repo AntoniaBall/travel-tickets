@@ -85,9 +85,7 @@ web_modules/
 
 
 # Fixtures
-10objects.json
-dataToImport.json
-fixtures/
+sql
 
 # Next.js build output
 .next

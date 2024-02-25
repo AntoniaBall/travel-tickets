@@ -2,6 +2,7 @@ import express, { Request, Response, Application } from "express";
 import dotenv from 'dotenv';
 import appRouter from "./config/routes";
 import { db } from "./config/db";
+import setupESClient from "./config/elastic";
 
 dotenv.config();
 
@@ -17,6 +18,9 @@ db.getConnection(function(err,conn) {
         console.log(`DB Connexion status ${conn.state}`);
     }
 });
+
+// Setup ES
+setupESClient();
 
 app.get('/', (req: Request, res: Response) => {
     res.send('Express && TypeScript Server is running');
