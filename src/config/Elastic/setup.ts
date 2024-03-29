@@ -1,7 +1,6 @@
-// setup es client
 import { Client } from '@elastic/elasticsearch';
 
-async function setupESClient() {
+const setupESClient = async () => {
     try {
         const esClient = new Client({
             node: process.env.ELASTIC_LOCAL_PORT,

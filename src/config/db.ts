@@ -3,7 +3,6 @@
 import mysql from 'mysql';
 import config from './config';
 
-
 const params = {
     user: config.mysql.user,
     password: config.mysql.password,

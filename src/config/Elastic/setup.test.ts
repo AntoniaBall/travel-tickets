@@ -12,7 +12,7 @@ test('it should true when ES is setup successfully', t => {
             return true;
         }
     }
-    const options = {node: 'http://localhost:9200', maxRetries: 2};
+    const options = { node: 'http://localhost:9200', maxRetries: 2 };
     const client = new esSuccessClientMock(options);
     t.true(client.ping());
 });

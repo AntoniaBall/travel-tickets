@@ -2,7 +2,8 @@ import express, { Request, Response, Application } from "express";
 import dotenv from 'dotenv';
 import appRouter from "./config/routes";
 import { db } from "./config/db";
-import setupESClient from "./config/elastic";
+import setupESClient from "./config/Elastic/setup";
+import createIndexes from "./config/Elastic/create-indexes";
 
 dotenv.config();
 
@@ -21,6 +22,10 @@ db.getConnection(function(err,conn) {
 
 // Setup ES
 setupESClient();
+
+// creating indexes
+createIndexes();
+
 
 app.get('/', (req: Request, res: Response) => {
     res.send('Express && TypeScript Server is running');
