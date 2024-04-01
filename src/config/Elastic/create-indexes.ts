@@ -15,7 +15,7 @@ const citiesNamesMappingBody = {
                 city: {
                     properties: {
                         name: { type: 'text' },
-                        pk_id: { type: 'integer' },
+                        pkCityId: { type: 'integer' },
                         latitude: { type: 'float' },
                         longitude: { type: 'float' },
                     }
@@ -33,8 +33,9 @@ const citiesStationsMappingBody = {
         mappings: {
             properties: {
                 cityName: { type: 'text'},
+                cityNameId: { type: 'integer'},
                 fkCityId: { type: 'integer'},
-                stations: {
+                station: {
                     properties: {
                         stationId: { type : 'integer'},
                         name: { type: 'text' },
@@ -51,6 +52,8 @@ const citiesStationsMappingBody = {
 
 const createIndexes = async (): Promise<void> => {
     try {
+        // await client.indices.delete({ index: 'citiesnames' });
+        // await client.indices.delete({ index: 'citiesstations' });
         if (!await client.indices.exists({ index: 'citiesnames' })) {
             console.log(`Creating index citiesnames with mapping`);
             await client.indices.create(citiesNamesMappingBody);
