@@ -10,8 +10,12 @@ const citiesNamesMappingBody = {
     body: {
         mappings: {
             properties: {
-                cityName: { type: 'text'},
-                language: { type: 'text'},
+                cityName: { 
+                    type: 'text',
+                    analyzer: 'autocomplete',
+                    search_analyzer: 'standard'
+                },
+                language: { type: 'keyword'},
                 city: {
                     properties: {
                         name: { type: 'text' },
@@ -23,8 +27,27 @@ const citiesNamesMappingBody = {
                 createdTime: { type: 'date'},
                 updatedTime: { type: 'date' }
             }
+        },
+        settings: {
+            analysis: {
+              analyzer: {
+                autocomplete: {
+                  tokenizer: 'autocomplete',
+                  filter: ['lowercase']
+                }
+              },
+              tokenizer: {
+                autocomplete: {
+                  type: 'edge_ngram',
+                  min_gram: 1,
+                  max_gram: 20,
+                  token_chars: ['letter', 'digit']
+                }
+              }
+            }
         }
     },
+
 }
 
 const citiesStationsMappingBody = {
@@ -65,7 +88,6 @@ const createIndexes = async (): Promise<void> => {
     } catch (error) {
         throw new Error(`Creating new indexes, ${error}`);
     }
-
 };
 
 export default createIndexes;

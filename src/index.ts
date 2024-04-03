@@ -19,7 +19,6 @@ createESClient();
 createIndexes();
 
 db.getConnection(function(err,conn) {
-
     if (err) {
         throw new Error(`Cannot connect to the DB , ${err.message}`);
     } else {

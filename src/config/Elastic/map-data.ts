@@ -33,12 +33,9 @@ const importCitiesNames = (db : mysql.Pool) => {
                         city: JSON.parse(value)
                     }
                 }, results);
-                console.log(bulkData);
                 const operations = flatMap(doc => [{ index: { _index: 'citiesnames' } }, doc], bulkData);
-                console.log("🚀 ~ connection.query ~ operations:", operations);
                 try {
                     const bulkResponse = await esClient.bulk({ refresh: true, operations });
-                    console.log(bulkResponse);
                     if (bulkResponse.errors) {
                         bulkResponse.items.forEach(item => {
                           if (item.index && item.index.error) {
@@ -92,12 +89,9 @@ const importCitiesStations = (db: mysql.Pool) => {
                         station: JSON.parse(value)
                     }
                 }, results);
-                console.log(bulkData);
                 const operations = flatMap(doc => [{ index: { _index: 'citiesstations' } }, doc], bulkData);
-                console.log("🚀 ~ connection.query ~ operations:", operations);
                 try {
                     const bulkResponse = await esClient.bulk({ refresh: true, operations });
-                    console.log(bulkResponse);
                     if (bulkResponse.errors) {
                         bulkResponse.items.forEach(item => {
                           if (item.index && item.index.error) {
@@ -112,9 +106,9 @@ const importCitiesStations = (db: mysql.Pool) => {
 
         } catch (error) {
             throw new Error(`Error while querying the db, ${error}`);
-            
         }
         
     });
 };
+
 export { importCitiesNames, importCitiesStations };
