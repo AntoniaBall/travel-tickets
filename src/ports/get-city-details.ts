@@ -1,4 +1,4 @@
-import createESClient from "../config/Elastic/setup";
+import createESClient from "../infra/setup-es";
 
 const getSingleCityDetails = async (cityId: string) => {
     const esClient = await createESClient();

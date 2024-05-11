@@ -2,19 +2,20 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const MYSQL_HOST = process.env.MYSQL_HOST;
-const MYSQL_DATABASE = process.env.MYSQL_DATABASE;
-const MYSQL_USER = process.env.MYSQL_USER;
-const MYSQL_PASSWORD = process.env.MYSQL_PASSWORD;
-
 const mysqlParams = {
-    host: MYSQL_HOST,
-    user: MYSQL_USER,
-    password: MYSQL_PASSWORD,
-    database: MYSQL_DATABASE,
+    host: process.env.MYSQL_HOST,
+    user:process.env.MYSQL_USER,
+    password: process.env.MYSQL_PASSWORD,
+    database: process.env.MYSQL_DATABASE,
 };
 
-const config = {
+const serverConfigs = {
+    port: process.env.PORT || 3001 
+};
+
+const defaultConfig = {
     mysql : mysqlParams,
+    server: serverConfigs,
 }
-export default config;
+
+export default defaultConfig;

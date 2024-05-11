@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import createESClient from "../config/Elastic/setup";
-import { get } from "lodash/fp";
-import { getSingleCityDetails } from "../services/get-city-details";
+import createESClient from "../infra/setup-es";
+import { get, getOr } from "lodash/fp";
+import { getSingleCityDetails } from "../ports/get-city-details";
 
 
 const getCity = (req: Request, res: Response) => {
@@ -11,15 +11,22 @@ const getCity = (req: Request, res: Response) => {
 const searchCity = async (req: Request, res: Response) => {
     try {
         const queryString = get('query.q', req);
-        console.log("🚀 ~ searchCity ~ value:", queryString);
+        const querySize = get('query.size', req);
+        const queryLanguage = getOr('', 'query.lang', req);
         const esClient = await createESClient();
         const result = await esClient.search({
             index: 'citiesnames',
-            size: 10,
+            size: querySize,
             query: {
-                match: {
-                    'cityName' : queryString
+                bool: {
+                    must: [
+                        { match: {'city.name' : queryString }},
+                        { match: {'language' : queryLanguage }},
+                    ]
                 }
+            },
+            collapse: {
+                field: 'pk_id'
             }
         });
         return res.status(200).json({ data: result.hits.hits });

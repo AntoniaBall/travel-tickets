@@ -1,6 +1,6 @@
 import mysql from 'mysql';
 import { flatMap, get, map } from 'lodash/fp'
-import createESClient from './setup';
+import createESClient from '../../infra/setup-es';
 
 const importCitiesNames = (db : mysql.Pool) => {
     db.getConnection(async (err, connection) => {
@@ -17,7 +17,8 @@ const importCitiesNames = (db : mysql.Pool) => {
                 'pk_id', c.pk_id,
                 'latitude', c.latitude ,
                 'longitude', c.longitude 
-            ) as "city"
+            ) as "city",
+            cn.language as "language"
             FROM CityName cn 
             INNER JOIN City c 
             ON cn.fk_city_id = c.pk_id;`;
